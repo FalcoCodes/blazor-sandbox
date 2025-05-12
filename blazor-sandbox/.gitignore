@@ -54,4 +54,3 @@ dkms.conf
 # Extra
 *.env
 *.secret
-*.cs
