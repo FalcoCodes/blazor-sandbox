@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@page "/counter/{InitialCount:int?}"
 @rendermode InteractiveServer
 
 <PageTitle>Counter</PageTitle>
@@ -9,14 +10,42 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">@buttonLabel</button>
 
-@code {
-    private int currentCount = 0;
+@if (InitialCount > 0) {
+    <p>InitialCount = @InitialCount</p>
+}
 
-    private string buttonLabel = "Click Me!";
+@code {
+    /* 
+        Parameters
+        props from React
+    */
+    [Parameter]
+    public int InitialCount { get; set; }
 
     [Parameter]
     public int IncrementAmount { get; set; } = 1;
 
+    /*
+        // protected override async Function(){}
+        componentDidMount from React
+        if there is a parameter passed in the route, it'll assign the value to our local
+        variable currentCount 
+    */    
+    protected override void OnInitialized() 
+    {
+        currentCount = InitialCount;
+    }
+
+    /*
+        Local variables used for our Counter component
+    */
+    private int currentCount = 0;
+
+    private string buttonLabel = "Click Me!";
+
+    /* 
+        Local function/method
+    */
     private void IncrementCount()
     {   
         if (currentCount > 9000) 
